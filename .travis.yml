@@ -1,0 +1,31 @@
+sudo: required
+
+language: bash
+
+git:
+    depth: 3
+    quiet: true
+
+services:
+    - docker
+
+env:
+    global:
+        - DOCKER_ORGS=juliendufresne
+    matrix:
+        - PHP_VERSION=7.1
+        - PHP_VERSION=7.2
+
+before_install:
+    - make clean
+
+install:
+    - travis_retry make init
+
+script:
+    - echo "that's ok for now"
+
+notifications:
+    email:
+        on_failure: change
+        on_success: never

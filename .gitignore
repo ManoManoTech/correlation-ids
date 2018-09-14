@@ -1,0 +1,4 @@
+###> composer/composer ###
+composer.lock
+/vendor/
+###< composer/composer ###
