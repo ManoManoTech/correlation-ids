@@ -23,7 +23,7 @@ install:
     - travis_retry make init
 
 script:
-    - echo "that's ok for now"
+    - make style
 
 notifications:
     email:
