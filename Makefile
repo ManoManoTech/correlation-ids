@@ -18,6 +18,7 @@ help:
 	@printf "\n"
 	@printf "\033[33m Fine grained tasks:\033[39m\n"
 	@printf "\033[32m   php-cs-fixer      \033[39m   Fix php code style issues.\n"
+	@printf "\033[32m   phpstan           \033[39m   PHP static analysis tool.\n"
 	@printf "\n"
 
 _FMT="    \033[38;5;106m%s\033[39m\n"
@@ -32,7 +33,7 @@ DOCKER_RUN_OPTS=--rm --name $@ --volume $(CURDIR):/app -u $(shell id -u):$(shell
 init: composer.lock
 
 .PHONY: style
-style: composer-validate php-cs-fixer-dry-run
+style: composer-validate php-cs-fixer-dry-run phpstan
 
 .PHONY: format
 format: php-cs-fixer
@@ -98,3 +99,13 @@ php-cs-fixer:
 	@printf $(_FMT) "$(PHP_CS_FIXER_CMD)"
 	@                $(PHP_CS_FIXER_CMD)
 ###< php-cs-fixer tasks ###
+
+###> phpstan tasks ###
+PHPSTAN_VERSION=0.10
+PHPSTAN_CMD=docker run $(DOCKER_RUN_OPTS) $(DOCKER_ORGS)/phpstan:$(PHPSTAN_VERSION)-php$(PHP_VERSION) --ansi analyse --no-progress
+
+.PHONY: phpstan
+phpstan:
+	@printf $(_FMT) "$(PHPSTAN_CMD)"
+	@                $(PHPSTAN_CMD)
+###< phpstan tasks ###
