@@ -18,6 +18,7 @@ help:
 	@printf "\n"
 	@printf "\033[33m Fine grained tasks:\033[39m\n"
 	@printf "\033[32m   php-cs-fixer      \033[39m   Fix php code style issues.\n"
+	@printf "\033[32m   php-parallel-lint \033[39m   Check php files.\n"
 	@printf "\033[32m   phpstan           \033[39m   PHP static analysis tool.\n"
 	@printf "\n"
 
@@ -33,7 +34,7 @@ DOCKER_RUN_OPTS=--rm --name $@ --volume $(CURDIR):/app -u $(shell id -u):$(shell
 init: composer.lock
 
 .PHONY: style
-style: composer-validate php-cs-fixer-dry-run phpstan
+style: composer-validate php-parallel-lint php-cs-fixer-dry-run phpstan
 
 .PHONY: format
 format: php-cs-fixer
@@ -99,6 +100,16 @@ php-cs-fixer:
 	@printf $(_FMT) "$(PHP_CS_FIXER_CMD)"
 	@                $(PHP_CS_FIXER_CMD)
 ###< php-cs-fixer tasks ###
+
+###> php-parallel-lint tasks ###
+PHP_PARALLEL_LINT_VERSION=1.0
+PHP_PARALLEL_LINT_CMD=docker run $(DOCKER_RUN_OPTS) $(DOCKER_ORGS)/php-parallel-lint:$(PHP_PARALLEL_LINT_VERSION)-php$(PHP_VERSION) --exclude vendor .
+
+.PHONY: php-parallel-lint
+php-parallel-lint:
+	@printf $(_FMT) "$(PHP_PARALLEL_LINT_CMD)"
+	@                $(PHP_PARALLEL_LINT_CMD)
+###< php-parallel-lint tasks ###
 
 ###> phpstan tasks ###
 PHPSTAN_VERSION=0.10
