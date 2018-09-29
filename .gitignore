@@ -1,0 +1,16 @@
+/reports
+
+###> composer/composer ###
+composer.lock
+/vendor/
+###< composer/composer ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
+
+###> phpstan/phpstan ###
+/phpstan.neon
+###< phpstan/phpstan ###

@@ -1,0 +1,9 @@
+includes:
+    # paths correspond to ones in the phpstan container
+    - /composer/vendor/phpstan/phpstan-phpunit/extension.neon
+    - /composer/vendor/phpstan/phpstan-strict-rules/rules.neon
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
