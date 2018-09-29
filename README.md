@@ -49,3 +49,78 @@ of which is calling which.
 2. Your application produces logs and you want to know which logs come from the
 same process.
 
+Installation
+------------
+
+```bash
+composer require manomano-tech/correlation-ids
+```
+
+Generator
+---------
+
+A generator is used to generate unique correlation ids for the current running
+application.
+
+This library provides one default generator (see [RamseyUuidGenerator])
+but you can create your own by implementing the [UniqueIdGeneratorInterface].  
+
+> **Note:** In order to use the [RamseyUuidGenerator] generator, you need to
+> install the [ramsey/uuid] package.
+
+[RamseyUuidGenerator]: /src/Generator/RamseyUuidGenerator.php
+[UniqueIdGeneratorInterface]: /src/Generator/UniqueIdGeneratorInterface.php
+[ramsey/uuid]: https://packagist.org/packages/ramsey/uuid
+
+Usage
+-----
+
+You have two possibilities:
+
+1. extracting correlation identifiers from HTTP headers
+2. specifying parent and root correlation identifiers manually
+
+### Extracting correlation identifiers from HTTP headers
+
+```php
+use ManomanoTech\CorrelationId\Factory\HeaderCorrelationIdContainerFactory;
+use ManomanoTech\CorrelationId\Generator\RamseyUuidGenerator;
+use ManomanoTech\CorrelationId\CorrelationEntryName;
+
+// We specify which generator will be responsible for generating the
+// identification of the current process
+$generator = new RamseyUuidGenerator();
+
+// We define what are the http header names to look for
+$correlationEntryNames = new CorrelationEntryName(
+    'Current-Correlation-id',
+    'Parent-Correlation-id',
+    'Root-Correlation-id'
+);
+
+$factory = new HeaderCorrelationIdContainerFactory(
+    $generator,
+    $correlationEntryNames
+);
+$correlationIdContainer = $factory->create(getallheaders());
+```
+
+### Specify parent and root correlation identifiers manually
+
+```php
+use ManomanoTech\CorrelationId\Factory\CorrelationIdContainerFactory;
+use ManomanoTech\CorrelationId\Generator\RamseyUuidGenerator;
+use ManomanoTech\CorrelationId\CorrelationEntryName;
+
+// We specify which generator will be responsible for generating the
+// identification of the current process
+$generator = new RamseyUuidGenerator();
+
+$factory = new CorrelationIdContainerFactory($generator);
+$correlationIdContainer = $factory->create(
+    '3fc044d9-90fa-4b50-b6d9-3423f567155f',
+    '3b5263fa-1644-4750-8f11-aaf61e58cd9e'
+);
+```
+
+> **Note:** parent and root correlation id may be null
