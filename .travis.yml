@@ -23,7 +23,7 @@ install:
     - travis_retry make init
 
 script:
-    - make style
+    - make check
 
 notifications:
     email:

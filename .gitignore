@@ -1,3 +1,5 @@
+/reports
+
 ###> composer/composer ###
 composer.lock
 /vendor/
