@@ -31,7 +31,11 @@
     "require-dev": {
         "php-mock/php-mock-phpunit": "^2.1",
         "phpunit/phpunit": "^7.3",
+        "ramsey/uuid": "^3.8",
         "symfony/debug": "^4.1",
         "symfony/phpunit-bridge": "^4.1"
+    },
+    "suggest": {
+        "ramsey/uuid": "Ability to use UUIDs as unique identifiers"
     }
 }
