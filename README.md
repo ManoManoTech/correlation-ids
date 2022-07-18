@@ -1,3 +1,7 @@
+# Inactive
+
+**📢 Note:** This repository is not maintained any more.
+
 Correlation identifiers
 =======================
 
