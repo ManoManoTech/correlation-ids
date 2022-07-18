@@ -37,5 +37,6 @@
     },
     "suggest": {
         "ramsey/uuid": "Ability to use UUIDs as unique identifiers"
-    }
+    },
+    "abandoned": "not maintained any more"
 }
